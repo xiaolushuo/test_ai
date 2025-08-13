@@ -101,8 +101,19 @@ export default function Home() {
                     {r.pinned && <span className="text-xs text-brand-red">置顶</span>}
                   </div>
                   {r.tags?.length ? (
-                    <div className="mt-2 flex flex-wrap gap-2 text-[11px] text-gray-500">
-                      {r.tags.map((t) => <span key={t}>#{t}</span>)}
+                    <div className="mt-2 flex flex-wrap gap-2 text-[11px]">
+                      {r.tags.map((t) => {
+                        const active = selectedTags.includes(t)
+                        return (
+                          <button
+                            key={t}
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleTag(t) }}
+                            className={`px-2 py-1 rounded-full border ${active ? 'bg-brand-red text-white border-brand-red' : 'border-gray-300 dark:border-gray-700 text-gray-500'}`}
+                          >
+                            #{t}
+                          </button>
+                        )
+                      })}
                     </div>
                   ) : null}
                   <div className="mt-2 text-xs text-gray-500">{new Date(r.updatedAt).toLocaleString()}</div>
